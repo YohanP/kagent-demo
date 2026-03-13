@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: guestbook-rust
+  namespace: guestbook
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: guestbook-rust
+  template:
+    metadata:
+      labels:
+        app: guestbook-rust
+    spec:
+      containers:
+      - name: main
+        image: ghcr.io/yohanp/guestbook-rust:latest
+        ports:
+        - containerPort: 3000
+        env:
+        # The app logic looks for 'redis-master' or 'redis' service name
+        - name: GET_HOSTS_FROM
+          value: dns
+        - name: REDIS_HOST
+          value: redis
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: guestbook-rust
+  namespace: guestbook
+spec:
+  ports:
+  - port: 80
+    targetPort: 3000
+  selector:
+    app: guestbook-rust
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: guestbook-rust-ingress
+  namespace: guestbook
+  annotations:
+    # Tell Traefik to listen on HTTP (port 80)
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: guestbook.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: guestbook-rust
+            port:
+              number: 80

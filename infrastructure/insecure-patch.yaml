@@ -1,0 +1,12 @@
+# Patch to disable TLS and run ArgoCD server in insecure mode (HTTP)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-server
+spec:
+  template:
+    spec:
+      containers:
+      - name: argocd-server
+        # Adding --insecure to the startup command
+        args: ["/usr/local/bin/argocd-server", "--insecure"]
