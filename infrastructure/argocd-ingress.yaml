@@ -5,8 +5,8 @@ metadata:
   namespace: argocd
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: web
-  ingressClassName: traefik
 spec:
+  ingressClassName: traefik
   rules:
   - http:
       paths:

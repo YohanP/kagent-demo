@@ -54,7 +54,7 @@ echo "6. Applying ArgoCD Ingress from infrastructure/argocd-ingress.yaml"
 kubectl apply -n "${ARGOCD_NAMESPACE}" -f infrastructure/argocd-ingress.yaml
 
 # --- 7. Create ArgoCD ApplicationSet ---
-echo "6. Applying ArgoCD ApplicationSet from argocd/applicationset.yaml"
+echo "7. Applying ArgoCD ApplicationSet from argocd/applicationset.yaml"
 kubectl apply -n "${ARGOCD_NAMESPACE}" -f argocd/applicationset.yaml
 
 echo "Local environment setup complete."
