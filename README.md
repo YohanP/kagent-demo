@@ -90,5 +90,5 @@ kubectl -n kagent apply -f kagent/kagent-gemini-config.yaml
 kubectl -n kagent apply -f kagent/kagent-github-mcp.yaml
 
 # Deploy the final "DevOps Expert" agent definition
-kubectl -n kagent apply -f kagent/kagent-devops-expert.yaml
+kubectl -n kagent apply -f kagent/kagent-sre-expert.yaml
 ```
